@@ -1,5 +1,9 @@
 import { reducer } from './todoList-reducer';
-import { addItem, deleteItem, toggleComplete } from './todoList-reducer';
+import { actions } from './todoList-reducer';
+
+const addItem = actions.addItem;
+const deleteItem = actions.delete;
+const toggleComplete = actions.toggleComplete;
 
 describe('TodoList Reducer', () => {
   it('can add an item', () => {
