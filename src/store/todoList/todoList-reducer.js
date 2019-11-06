@@ -3,7 +3,7 @@ export const initialState = [];
 export function reducer(state = initialState, action = {}) {
   switch(action.type) {
     case 'addItem':
-      return [...state, action.payload];
+      return state.concat(action.payload);
     case 'deleteItem': 
       return state.filter(item => item._id !== action.payload);
     case 'toggleComplete':
@@ -13,23 +13,40 @@ export function reducer(state = initialState, action = {}) {
   }
 }
 
-export function addItem(item) {
+const API = 'https://api-js401.herokuapp.com/api/v1/todo';
+
+export const actions = {};
+
+actions.addItem = (item) => {
   return { 
     type: 'addItem', 
     payload: item,
   };
-}
+};
 
-export function deleteItem(id) {
+actions.deleteItem = (id) => {
   return {
     type: 'deleteItem',
     payload: id,
   }
-}
+};
 
-export function toggleComplete(id) {
+actions.toggleComplete = (id) => {
   return {
     type: 'toggleComplete',
     payload: id,
   }
-}
+};
+
+actions.loadToDoList = () => {
+
+  return (dispatch) => {
+    fetch(API)
+      .then(results => results.json())
+      .then(body => {
+        console.log(body);
+        dispatch(actions.addItem(body.results));
+      })
+
+  }
+};

@@ -7,7 +7,7 @@ import { When } from '../if';
 import Modal from '../modal';
 import schema from '../../schema.json';
 
-import { addItem, deleteItem, toggleComplete } from '../../store/todoList/todoList-reducer';
+import { actions } from '../../store/todoList/todoList-reducer';
 import { toggleDetails } from '../../store/details/details-reducer';
 import { resetItem } from '../../store/item/item-reducer';
 
@@ -105,9 +105,9 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    addItem: (item) => dispatch(addItem(item)),
-    deleteItem: (id) => dispatch(deleteItem(id)),
-    toggleComplete: (id) => dispatch(toggleComplete(id)),
+    addItem: (item) => dispatch(actions.addItem(item)),
+    deleteItem: (id) => dispatch(actions.deleteItem(id)),
+    toggleComplete: (id) => dispatch(actions.toggleComplete(id)),
     toggleDetails: (item) => dispatch(toggleDetails(item)),
     resetItem: () => dispatch(resetItem()),
   }
