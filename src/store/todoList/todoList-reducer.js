@@ -44,8 +44,6 @@ actions.toggleComplete = (id) => {
   }
 };
 
-//Connected Actions
-
 actions.get = (items) => ({
   type: 'GET',
   payload: items,
@@ -59,8 +57,7 @@ actions.put = (id, record) => ({
   },
 }); 
 
-
-
+//Connected Actions
 actions.loadToDoList = () => {
   return (dispatch) => {
     fetch(API)
@@ -95,7 +92,6 @@ actions.updateItem = (item) => {
     })
       .then(res => res.json())
       .then(body => {
-        console.log(body);
         dispatch(actions.put(id, body));
       })
   }
@@ -108,7 +104,6 @@ actions.deleteItem = (id) => {
     })
       .then(res => res.json())
       .then(body => {
-        console.log(body);
         dispatch(actions.delete(id));
       })
   }

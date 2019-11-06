@@ -1,10 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Form from 'react-jsonschema-form';
 import { connect } from 'react-redux';
 
 import { When } from '../if';
 import Modal from '../modal';
-import schema from '../../schema.json';
 
 import { actions } from '../../store/todoList/todoList-reducer';
 import { toggleDetails } from '../../store/details/details-reducer';
@@ -22,6 +21,8 @@ const formUiSchema = {
 
 const ToDo = (props) => {
   const { todoList, details, loadToDoList, updateItem, postItem, deleteItem, toggleDetails } = props;
+
+  const [schema, setSchema] = useState({});
 
   let addNewItem = (submitData) => {
     postItem(submitData.formData)
@@ -50,8 +51,18 @@ const ToDo = (props) => {
     toggleDetails(item);
   }
 
+  let loadSchema = () => {
+    return fetch('https://api-js401.herokuapp.com/api/v1/todo/schema')
+      .then(res => res.json())
+      .then(body => {
+        console.log(body);
+        setSchema(body);
+      })
+  }
+
   useEffect(() => {
     loadToDoList();
+    loadSchema();
   }, [loadToDoList]);
 
   return (
