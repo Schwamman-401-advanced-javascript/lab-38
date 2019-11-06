@@ -2,16 +2,16 @@ export const initialState = [];
 
 export function reducer(state = initialState, action = {}) {
   switch(action.type) {
-    case 'addItem':
-      return state.concat(action.payload);
-    case 'deleteItem': 
-      return state.filter(item => item._id !== action.payload);
     case 'toggleComplete':
       return state.map(item => item._id === action.payload ? { ...item, complete: !item.complete, } : item);
     case 'GET':
       return action.payload; 
+    case 'POST':
+      return state.concat(action.payload);
     case 'PUT': 
       return state.map(item => item._id === action.payload.id ? action.payload.record : item); 
+    case 'DELETE': 
+      return state.filter(item => item._id !== action.payload);
     default:
       return state;
   }
@@ -25,14 +25,14 @@ export const actions = {};
 
 actions.addItem = (item) => {
   return { 
-    type: 'addItem', 
+    type: 'POST', 
     payload: item,
   };
 };
 
-actions.deleteItem = (id) => {
+actions.delete = (id) => {
   return {
-    type: 'deleteItem',
+    type: 'DELETE',
     payload: id,
   }
 };
@@ -58,6 +58,8 @@ actions.put = (id, record) => ({
     record,
   },
 }); 
+
+
 
 actions.loadToDoList = () => {
   return (dispatch) => {
@@ -95,6 +97,19 @@ actions.updateItem = (item) => {
       .then(body => {
         console.log(body);
         dispatch(actions.put(id, body));
+      })
+  }
+}
+
+actions.deleteItem = (id) => {
+  return dispatch => {
+    fetch(`${API}/${id}`, {
+      method: 'DELETE',
+    })
+      .then(res => res.json())
+      .then(body => {
+        console.log(body);
+        dispatch(actions.delete(id));
       })
   }
 }

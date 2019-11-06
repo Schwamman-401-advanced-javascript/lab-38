@@ -106,7 +106,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     addItem: (item) => dispatch(actions.addItem(item)),
-    deleteItem: (id) => dispatch(actions.deleteItem(id)),
+    deleteItem: (id) => dispatch(actions.delete(id)),
     toggleComplete: (id) => dispatch(actions.toggleComplete(id)),
     toggleDetails: (item) => dispatch(toggleDetails(item)),
     resetItem: () => dispatch(resetItem()),

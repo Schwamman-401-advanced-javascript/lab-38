@@ -21,45 +21,14 @@ const formUiSchema = {
 }
 
 const ToDo = (props) => {
-  const { todoList, details, loadToDoList, updateItem, postItem, addItem, deleteItem, toggleComplete, toggleDetails, resetItem } = props;
-
-  let handleInputChange = e => {
-    let { name, value } = e.target;
-    this.setState(state => ({
-      item: {...state.item, [name]: value},
-    }));
-  };
-
-  let callAPI = (url, method='get', body, handler, errorHandler) => {
-
-    return fetch(url, {
-      method: method,
-      mode: 'cors',
-      cache: 'no-cache',
-      headers: { 'Content-Type': 'application/json' },
-      body: body ? JSON.stringify(body) : undefined,
-    })
-      .then(response => {
-        if (!response.ok) throw Error(response.statusText);
-        return response.json();
-      })
-      .then(data => typeof handler === 'function' ? handler(data) : null )
-      .catch( (e) => typeof errorHandler === 'function' ? errorHandler(e) : console.error(e)  );
-  };
+  const { todoList, details, loadToDoList, updateItem, postItem, deleteItem, toggleDetails } = props;
 
   let addNewItem = (submitData) => {
     postItem(submitData.formData)
   };
 
   let removeItem = id => {
-
-    const _updateState = () =>
-      this.setState(state => ({
-        todoList: state.todoList.filter(item => item._id !== id),
-      }));
-
-    this.callAPI( `${todoAPI}/${id}`, 'DELETE', undefined, _updateState );
-
+    deleteItem(id);
   };
 
   let saveItem = updatedItem => {
