@@ -57,7 +57,7 @@ actions.put = (id, record) => ({
     id,
     record,
   },
-});
+}); 
 
 actions.loadToDoList = () => {
   return (dispatch) => {
@@ -69,9 +69,22 @@ actions.loadToDoList = () => {
   }
 };
 
+actions.postItem = (item) => {
+  return dispatch => {
+    fetch(API, {
+      method: 'POST',
+      body: JSON.stringify(item),
+      headers: new Headers({'Content-Type': 'application/json'}),
+    })
+      .then(res => res.json())
+      .then(body => {
+        dispatch(actions.addItem(body));
+      })
+  }
+}
+
 actions.updateItem = (item) => {
   let id = item._id;
-  console.log(item);
   return dispatch => {
     fetch(`${API}/${id}`, {
       method: 'PUT',

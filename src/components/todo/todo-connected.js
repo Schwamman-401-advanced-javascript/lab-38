@@ -21,7 +21,7 @@ const formUiSchema = {
 }
 
 const ToDo = (props) => {
-  const { todoList, details, loadToDoList, updateItem, addItem, deleteItem, toggleComplete, toggleDetails, resetItem } = props;
+  const { todoList, details, loadToDoList, updateItem, postItem, addItem, deleteItem, toggleComplete, toggleDetails, resetItem } = props;
 
   let handleInputChange = e => {
     let { name, value } = e.target;
@@ -47,18 +47,8 @@ const ToDo = (props) => {
       .catch( (e) => typeof errorHandler === 'function' ? errorHandler(e) : console.error(e)  );
   };
 
-  let addNewItem = (e) => {
-
-    e.preventDefault();
-    e.target.reset();
-
-    const _updateState = newItem =>
-      this.setState(state => ({
-        todoList: [...state.todoList, newItem],
-      }));
-
-    this.callAPI( todoAPI, 'POST', this.state.item, _updateState );
-
+  let addNewItem = (submitData) => {
+    postItem(submitData.formData)
   };
 
   let removeItem = id => {
@@ -171,6 +161,7 @@ function mapDispatchToProps(dispatch) {
     resetItem: () => dispatch(resetItem()),
     loadToDoList: () => dispatch(actions.loadToDoList()),
     updateItem: (item) => dispatch(actions.updateItem(item)),
+    postItem: (item) => dispatch(actions.postItem(item)),
   }
 }
 
