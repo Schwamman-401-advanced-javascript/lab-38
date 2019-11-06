@@ -1,0 +1,37 @@
+{
+  "title": "todo",
+  "type": "object",
+  "properties": {
+    "text": {
+      "type": "string",
+      "title": "To Do"
+    },
+    "assignee": {
+      "type": "string",
+      "title": "Assignee"
+    },
+    "due": {
+      "type": "string",
+      "title": "Due",
+      "format": "date"
+    },
+    "difficulty": {
+      "type": "number",
+      "title": "Difficulty",
+      "enum": [1, 2, 3, 4, 5],
+      "default": 3
+    },
+    "complete": {
+      "type": "boolean",
+      "default": false
+    },
+    "_id": {
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{24}$"
+    },
+    "__v": {
+      "type": "number"
+    }
+  },
+  "required": ["text", "assignee", "due", "difficulty", "complete"]
+}
