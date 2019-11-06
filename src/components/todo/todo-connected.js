@@ -21,7 +21,7 @@ const formUiSchema = {
 }
 
 const ToDo = (props) => {
-  const { todoList, details, loadToDoList, addItem, deleteItem, toggleComplete, toggleDetails, resetItem } = props;
+  const { todoList, details, loadToDoList, updateItem, addItem, deleteItem, toggleComplete, toggleDetails, resetItem } = props;
 
   let handleInputChange = e => {
     let { name, value } = e.target;
@@ -73,16 +73,7 @@ const ToDo = (props) => {
   };
 
   let saveItem = updatedItem => {
-
-    const _updateState = (newItem) =>
-      this.setState(state => ({
-        todoList: state.todoList.map(item =>
-          item._id === newItem._id ? newItem : item
-        ),
-      }));
-
-    this.callAPI( `${todoAPI}/${updatedItem._id}`, 'PUT', updatedItem, _updateState );
-
+    updateItem(updatedItem);
   };
 
   let setCompleted = id => {
@@ -178,7 +169,8 @@ function mapDispatchToProps(dispatch) {
     toggleComplete: (id) => dispatch(actions.toggleComplete(id)),
     toggleDetails: (item) => dispatch(toggleDetails(item)),
     resetItem: () => dispatch(resetItem()),
-    loadToDoList: () => dispatch(actions.loadToDoList())
+    loadToDoList: () => dispatch(actions.loadToDoList()),
+    updateItem: (item) => dispatch(actions.updateItem(item)),
   }
 }
 
